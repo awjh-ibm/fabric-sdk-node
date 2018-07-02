@@ -16,7 +16,7 @@ services:
 
   orderer.example.com:
     container_name: orderer.example.com
-    image: hyperledger/fabric-orderer
+    image: hyperledger/fabric-orderer:awjh-ibm
     environment:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
@@ -34,7 +34,7 @@ services:
 
   peer0.org1.example.com:
     container_name: peer0.org1.example.com
-    image: hyperledger/fabric-peer
+    image: hyperledger/fabric-peer:awjh-ibm
     environment:
       - CORE_LOGGING_LEVEL=debug
       - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
@@ -52,10 +52,8 @@ services:
     volumes:
         - /var/run/:/host/var/run/
         - ./:/etc/hyperledger/configtx
+        - ../../dummy:/opt/gopath/src/dummy
         - ./crypto-config/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/msp:/etc/hyperledger/peer/msp
         - ./crypto-config/peerOrganizations/org1.example.com/users:/etc/hyperledger/msp/users
     depends_on:
       - orderer.example.com
-
-
-

@@ -57,9 +57,18 @@ sleep ${FABRIC_START_TIMEOUT}
 
 # Create the channel
 docker exec peer0.org1.example.com peer channel create -o orderer.example.com:7050 -c composerchannel -f /etc/hyperledger/configtx/composer-channel.tx
+# docker exec cli peer channel create -o orderer.example.com:7050 -c composerchannel -f /etc/hyperledger/configtx/composer-channel.tx
 
 # Join peer0.org1.example.com to the channel.
 docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com/msp" peer0.org1.example.com peer channel join -b composerchannel.block
+
+# docker exec -e "CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/msp/users/Admin@org1.example.com/msp" cli peer channel join -b composerchannel.block
+
+# Now the user can proceed to build and start chaincode in one terminal
+# And leverage the CLI container to issue install instantiate invoke query commands in another
+
+#we should have bailed if above commands failed.
+#we are here, so they worked
 
 if [ "${FABRIC_DEV_MODE}" == "true" ]; then
     echo "Fabric Network started in chaincode development mode"
